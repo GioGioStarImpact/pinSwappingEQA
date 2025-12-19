@@ -302,36 +302,36 @@ def partition_tuples(F, N, M):
 
 ## 7. 程式碼結構
 
-### 核心函數一覽
+### 實作檔案
+
+- **main.py**: 原始教學版本，包含詳細的 verbose 輸出和多種輸入格式支援
+- **pin_swapping.py**: 優化版本，專注於效能和清晰度
+  - 限制: N ≤ 8 輸入, M ≤ 3 輸出
+  - 所有函數都有詳細註解對應 spec_simple.md
+
+### 核心函數一覽 (pin_swapping.py)
 
 ```
-bits_to_int()               將 bit 陣列轉整數
+parse_truth_table()              驗證真值表格式
     ↓
-parse_truth_table_rows()    解析真值表
-    ↓
-inverse_perm()              計算排列的反函數
-    ↓
-net_pattern_to_pin_pattern()  外部訊號 → 晶片腳位
-    ↓
-build_output_functions_bitvectors()  計算 bitvector
-    ↓
-canonical_signature_for_pi()  計算標準化指紋
-    ↓
-partition_tuples()          分類所有排列
-```
-
-### 函數關係圖
-
-```
-partition_tuples
+partition_pin_permutations()     主函數：分類所有排列
     └─ for each π:
-        └─ canonical_signature_for_pi
-            └─ build_output_functions_bitvectors
-                ├─ inverse_perm
+        └─ compute_canonical_signature()     計算標準化指紋
+            └─ compute_output_bitvectors()   計算 bitvector
                 └─ for each t:
-                    ├─ net_pattern_to_pin_pattern
+                    ├─ apply_input_permutation()  外部訊號 → 晶片腳位
                     └─ F[u] (查真值表)
 ```
+
+### 函數對應 spec_simple.md 章節
+
+| 函數名稱 | 對應章節 | 說明 |
+|---------|---------|------|
+| `apply_input_permutation()` | § 3.1 | 概念 1: 外部訊號 vs 晶片腳位 |
+| `compute_output_bitvectors()` | § 3.2 | 概念 2: 輸出函數的指紋 (Bitvector) |
+| `compute_canonical_signature()` | § 3.3 | 概念 3: 標準化指紋 |
+| `partition_pin_permutations()` | § 4 | 完整演算法流程 |
+| `example_3_input_2_output()` | § 5 | 實際範例 |
 
 ---
 
